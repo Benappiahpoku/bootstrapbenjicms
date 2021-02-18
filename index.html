@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- font-awesome cdn -->
+    <script src="https://use.fontawesome.com/ff821be39a.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="./dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./dist/css/style.css" />
+
+    <title>Landing page</title>
+</head>
+
+<body>
+    <!-- Navigation -->
+       
+<nav class="navbar navbar-expand-md navbar-dark navbar-custom fixed-top">
+    <div class="container">
+        <a href="/" class="navbar-brand">
+            Benji</a>
+
+        <div class="page-scroll">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample09"
+                aria-controls="navbarsExample09" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarsExample09">
+            <ul class="nav navbar-nav">
+                <li class="hidden">
+                    <a href="#page-top" class="nav-link"></a>
+                </li>
+                <li class="page-scroll">
+                    <a href="#intro" class="nav-link">Home</a>
+                </li>
+                <li class="page-scroll">
+                    <a href="#blog" class="nav-link">Blog</a>
+                </li>
+                <li class="page-scroll">
+                    <a href="#contact" class="nav-link">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+    
+
+    <!-- Main Content -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-8 mx-auto">
+                    @foreach ($posts as $post)
+                    <div class="post-preview">
+                        <a href="{{ url('post/' . $post->slug) }}">
+                            <h2 class="post-title">
+                                {{ $post->title }}
+                            </h2>
+                            <h3 class="post-subtitle">
+                                {{ $post->sub_title }}
+                            </h3>
+                        </a>
+                        <p class="post-meta">Posted by
+                            <a href="#"> {{ $post->user->name }} </a>
+                            on {{ date('M d, Y', strtotime($post->created_at)) }}
+                            @if (count($post->categories) > 0)
+                            | <span class="post-category">
+                                Category :
+                                @foreach ($post->categories as $category)
+                                <a href=" {{ url('category/' . $category->slug) }} "> {{ $category->name }} </a>,
+                                @endforeach
+                            </span>
+                            @endif
+                        </p>
+                    </div>
+                    <hr>
+                    @endforeach
+
+                    <!-- Pager -->
+                    <div class="clearfix mt-4">
+                        {{ $posts->links()}}
+                    </div>
+                </div>
+
+                <!-- Category -->
+                <div class="col-lg-4 col-md-4">
+                    <div class="category">
+                        <h2 class="category-title">Category</h2>
+                        <ul class="category-list">
+                            @foreach ($categories as $category)
+                            <li> <a href=" {{ url('category/' . $category->slug)}} "> {{ $category->name}} </a></li>
+                            @endforeach
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   
+
+    <!-- Contact section -->
+    <section id="contact" class="content-section contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2 class="card-title">Recent Posts</h2>
+                            <hr>
+                            @foreach ($posts as $post)
+                            <a href="/detail/{{ $post->id }}">
+                                <p class="card-text" style="color:white;">{{ $post->title }}</p>
+                            </a>
+                            <hr>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            @foreach ($abouts as $about)
+                            <h2 class="card-title">{{ $about->title }}</h2>
+                            <hr>
+                            <p class="card-text">{!! $about->description !!} </p>
+                            @endforeach
+                            <hr>
+                            <ul class="list-inline banner-social-buttons">
+                                <li class="list-inline-item">
+                                    <a href="#" class="btn btn-light btn-lg"><i class="fa fa-twitter fa-fw"
+                                            aria-hidden="false"></i>
+                                        Twitter
+                                    </a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="https://wa.me/233244314463" class="btn btn-light btn-lg"><i
+                                            class="fa fa-whatsapp fa-fw" aria-hidden="false"></i>
+                                        Whatsapp
+                                    </a>
+                                </li>
+
+                                <li class="list-inline-item">
+                                    <a href="mailto:benjamin@lereveagency.com" class="btn btn-light btn-lg"><i
+                                            class="fa fa-envelope fa-fw" aria-hidden="false"></i>
+                                        Email
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      
+    </section>
+    
+      <!-- Footer section -->
+
+      <footer>
+          <div>
+              <p>
+                  Le R&ecirc;ve Agency &copy;
+                  <script type="text/javascript">
+                      var today = new Date();
+                      var year = today.getFullYear();
+                      document.write(year);
+                  </script>
+                  , All Rights Reserverd.
+              </p>
+              <p>
+                  Made with
+                  <i class="fa fa-heart" aria-hidden="true"> </i>
+                  <a href="http://www.lereveagency.com" target="_blank">by Le R&ecirc;ve Agency</a>
+              </p>
+          </div>
+      </footer>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="./dist/js/jquery.min.js"></script>
+    <script src="./dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="./dist/js/main.js"></script>
+</body>
+
+</html>
